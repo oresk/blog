@@ -2,55 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://oresk.github.io/blog/posts/hello-world/</loc>
-    <lastmod>2022-11-14T22:18:48+01:00</lastmod>
+    <loc>http://blog.oreskovic.me/posts/just-bought-a-pinephone/</loc>
+    <lastmod>2019-12-20T20:17:41+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/posts/</loc>
-    <lastmod>2022-11-14T22:18:48+01:00</lastmod>
+    <loc>http://blog.oreskovic.me/posts/</loc>
+    <lastmod>2019-12-20T20:17:41+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/</loc>
-    <lastmod>2022-11-14T22:18:48+01:00</lastmod>
+    <loc>http://blog.oreskovic.me/</loc>
+    <lastmod>2019-12-20T20:17:41+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/a-new-gnu/</loc>
+    <loc>http://blog.oreskovic.me/posts/my-firefox-setup/</loc>
+    <lastmod>2019-11-03T18:57:28+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/tags/arduino/</loc>
+    <loc>http://blog.oreskovic.me/posts/jtag-debugging-esp32/</loc>
+    <lastmod>2019-08-05T15:07:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/categories/arduino/</loc>
+    <loc>http://blog.oreskovic.me/tags/arduino/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/updating-your-fst01/</loc>
+    <loc>http://blog.oreskovic.me/categories/arduino/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/categories/</loc>
+    <loc>http://blog.oreskovic.me/categories/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/cp2102-usb-to-serial-outputing-4-5v/</loc>
+    <loc>http://blog.oreskovic.me/tags/esp8266/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/tags/esp8266/</loc>
+    <loc>http://blog.oreskovic.me/categories/esp8266/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/categories/esp8266/</loc>
+    <loc>http://blog.oreskovic.me/tags/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/experimenting-with-spinning-up-virtual-machines-on-digital-ocean-through-its-api/</loc>
+    <loc>http://blog.oreskovic.me/tags/xiaomi/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/first-steps-with-free-fpga-toolchain-and-ulx3s-board/</loc>
+    <loc>http://blog.oreskovic.me/categories/xiaomi/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/getting-up-and-running-with-mynewt-and-adafruit-feather-pro/</loc>
+    <loc>http://blog.oreskovic.me/posts/xiaomi/</loc>
+    <lastmod>2019-07-28T09:03:53+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/jtag-debugging-esp32/</loc>
+    <loc>http://blog.oreskovic.me/posts/cp2102-usb-to-serial-outputing-4-5v/</loc>
+    <lastmod>2019-01-10T14:10:22+00:00</lastmod>
   </url><url>
-    <loc>https://oresk.github.io/blog/post/just-bought-a-pinephone/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/post/lily58/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/post/my-firefox-setup/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/post/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/post/small-linux-cli/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/tags/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/tags/xiaomi/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/categories/xiaomi/</loc>
-  </url><url>
-    <loc>https://oresk.github.io/blog/post/xiaomi/</loc>
+    <loc>http://blog.oreskovic.me/posts/updating-your-fst01/</loc>
+    <lastmod>2018-04-18T10:46:53+00:00</lastmod>
   </url>
 </urlset>
