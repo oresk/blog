@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on The Lorentz Force</title>
-    <link>http://blog.oreskovic.me/categories/</link>
+    <link>https://oresk.github.io/blog/categories/</link>
     <description>Recent content in Categories on The Lorentz Force</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 09:03:53 +0000</lastBuildDate><atom:link href="http://blog.oreskovic.me/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jul 2019 09:03:53 +0000</lastBuildDate><atom:link href="https://oresk.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>arduino</title>
-      <link>http://blog.oreskovic.me/categories/arduino/</link>
+      <link>https://oresk.github.io/blog/categories/arduino/</link>
       <pubDate>Sun, 28 Jul 2019 09:03:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/categories/arduino/</guid>
+      <guid>https://oresk.github.io/blog/categories/arduino/</guid>
       <description></description>
     </item>
     
     <item>
       <title>esp8266</title>
-      <link>http://blog.oreskovic.me/categories/esp8266/</link>
+      <link>https://oresk.github.io/blog/categories/esp8266/</link>
       <pubDate>Sun, 28 Jul 2019 09:03:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/categories/esp8266/</guid>
+      <guid>https://oresk.github.io/blog/categories/esp8266/</guid>
       <description></description>
     </item>
     
     <item>
       <title>xiaomi</title>
-      <link>http://blog.oreskovic.me/categories/xiaomi/</link>
+      <link>https://oresk.github.io/blog/categories/xiaomi/</link>
       <pubDate>Sun, 28 Jul 2019 09:03:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/categories/xiaomi/</guid>
+      <guid>https://oresk.github.io/blog/categories/xiaomi/</guid>
       <description></description>
     </item>
     

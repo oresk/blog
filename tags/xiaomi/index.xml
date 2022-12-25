@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>xiaomi on The Lorentz Force</title>
-    <link>http://blog.oreskovic.me/tags/xiaomi/</link>
+    <link>https://oresk.github.io/blog/tags/xiaomi/</link>
     <description>Recent content in xiaomi on The Lorentz Force</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 09:03:53 +0000</lastBuildDate><atom:link href="http://blog.oreskovic.me/tags/xiaomi/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jul 2019 09:03:53 +0000</lastBuildDate><atom:link href="https://oresk.github.io/blog/tags/xiaomi/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Xiaomi Desk LED Lamp with a FOSS firmware</title>
-      <link>http://blog.oreskovic.me/posts/xiaomi/</link>
+      <link>https://oresk.github.io/blog/posts/xiaomi/</link>
       <pubDate>Sun, 28 Jul 2019 09:03:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/xiaomi/</guid>
+      <guid>https://oresk.github.io/blog/posts/xiaomi/</guid>
       <description>I needed a lamp on my table. I needed some backlight when I am working on my computer, and I needed a strong worklight when I am soldering and working on electronics. I found Xiaomi LED wifi lamp in my home town, of all the places. And, actually, that was the cheapest place I was able to find it anywhere, including the Internet.
 I brought it home, and it was great.</description>
     </item>

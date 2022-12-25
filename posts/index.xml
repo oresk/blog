@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on The Lorentz Force</title>
-    <link>http://blog.oreskovic.me/posts/</link>
+    <link>https://oresk.github.io/blog/posts/</link>
     <description>Recent content in Posts on The Lorentz Force</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Dec 2019 20:17:41 +0000</lastBuildDate><atom:link href="http://blog.oreskovic.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Dec 2019 20:17:41 +0000</lastBuildDate><atom:link href="https://oresk.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Just bought a PinePhone</title>
-      <link>http://blog.oreskovic.me/posts/just-bought-a-pinephone/</link>
+      <link>https://oresk.github.io/blog/posts/just-bought-a-pinephone/</link>
       <pubDate>Fri, 20 Dec 2019 20:17:41 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/just-bought-a-pinephone/</guid>
+      <guid>https://oresk.github.io/blog/posts/just-bought-a-pinephone/</guid>
       <description>I&amp;rsquo;ve just bought a PinePhone. I&amp;rsquo;ve ordered the Brave Heart edition, as that one is the only version available at the moment. Currently it seems that the only difference with the &amp;ldquo;propper&amp;rdquo; version will be that it is not comming with a usable OS on it.
 This is where I would put the picture of my phone, If I had it here :-)
 I am not going to go through the specs, feel free to click the above link and look at them.</description>
@@ -20,10 +20,10 @@ I am not going to go through the specs, feel free to click the above link and lo
     
     <item>
       <title>My Firefox setup</title>
-      <link>http://blog.oreskovic.me/posts/my-firefox-setup/</link>
+      <link>https://oresk.github.io/blog/posts/my-firefox-setup/</link>
       <pubDate>Sun, 03 Nov 2019 18:57:28 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/my-firefox-setup/</guid>
+      <guid>https://oresk.github.io/blog/posts/my-firefox-setup/</guid>
       <description>I had a problem with my firefox and I had to restart my firefox profile to be able to start it. Mleh, shit like this sometimes happens. Anyway, I used a generic chromium with just a uBlock origin plugin while trying to debug what was happening, and it came to me how different my UX in Firefox is.
 Night look
 I thought it would be interesting to do a writeup about which plugins I am using.</description>
@@ -31,39 +31,39 @@ I thought it would be interesting to do a writeup about which plugins I am using
     
     <item>
       <title>JTAG debugging ESP32 - huzzah32</title>
-      <link>http://blog.oreskovic.me/posts/jtag-debugging-esp32/</link>
+      <link>https://oresk.github.io/blog/posts/jtag-debugging-esp32/</link>
       <pubDate>Mon, 05 Aug 2019 15:07:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/jtag-debugging-esp32/</guid>
+      <guid>https://oresk.github.io/blog/posts/jtag-debugging-esp32/</guid>
       <description>I am currently working on a project using an ESP32. I really the way Espressif has set up the development tools, I&amp;rsquo;ll probably do a post about my thoughts about it.
 The serial port and logging is setup out of the box, so I&amp;rsquo;ve been using printfs to debug the code. There are a couple of problems with this approach, but one big advantage, it is easy and just works. The downsides are that for every time you want to look at a variable, you add a printf, you build the program and need to upload it to the board, and as it is uploaded through the bootloader operating at 115200baud it takes some time.</description>
     </item>
     
     <item>
       <title>Xiaomi Desk LED Lamp with a FOSS firmware</title>
-      <link>http://blog.oreskovic.me/posts/xiaomi/</link>
+      <link>https://oresk.github.io/blog/posts/xiaomi/</link>
       <pubDate>Sun, 28 Jul 2019 09:03:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/xiaomi/</guid>
+      <guid>https://oresk.github.io/blog/posts/xiaomi/</guid>
       <description>I needed a lamp on my table. I needed some backlight when I am working on my computer, and I needed a strong worklight when I am soldering and working on electronics. I found Xiaomi LED wifi lamp in my home town, of all the places. And, actually, that was the cheapest place I was able to find it anywhere, including the Internet.
 I brought it home, and it was great.</description>
     </item>
     
     <item>
       <title>CP2102 usb to serial outputing 4.5V</title>
-      <link>http://blog.oreskovic.me/posts/cp2102-usb-to-serial-outputing-4-5v/</link>
+      <link>https://oresk.github.io/blog/posts/cp2102-usb-to-serial-outputing-4-5v/</link>
       <pubDate>Thu, 10 Jan 2019 14:10:22 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/cp2102-usb-to-serial-outputing-4-5v/</guid>
+      <guid>https://oresk.github.io/blog/posts/cp2102-usb-to-serial-outputing-4-5v/</guid>
       <description>So, I&amp;rsquo;ve just had a new project programming a NRF52 and with almost all embedded projects it is great to have a way to easily debug some problems without setting up the whole debugging environment. Using the serial connection is usually how I do it, sometimes a LED is enough. Because of that I have a lot of USB to serial adapters. All of the ones I had had a USB A connector on it which made it hard to connect it to the development board, I had to have a extension cable or have the dongle hanging out directly on the laptop.</description>
     </item>
     
     <item>
       <title>Building GNUK and updating your FST-01 fw</title>
-      <link>http://blog.oreskovic.me/posts/updating-your-fst01/</link>
+      <link>https://oresk.github.io/blog/posts/updating-your-fst01/</link>
       <pubDate>Wed, 18 Apr 2018 10:46:53 +0000</pubDate>
       
-      <guid>http://blog.oreskovic.me/posts/updating-your-fst01/</guid>
+      <guid>https://oresk.github.io/blog/posts/updating-your-fst01/</guid>
       <description>As GNUK documentation says &amp;ldquo;Gnuk is an implementation of USB cryptographic token for GNU Privacy Guard&amp;rdquo;. It allows you not to have your private key available on the system, but allow you to use it. There are two ways to update your firmware, to use the script in the repo to do it, if your gnuk is functional or use the programmer to flash the binary.
 Building the firmware To build the firmware we need to clone the repository and because a part of it is a submodule we also need to fetch that.</description>
     </item>
