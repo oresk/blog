@@ -6,7 +6,16 @@
     <description>Recent content in Posts on The Lorentz Force</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Dec 2019 20:17:41 +0000</lastBuildDate><atom:link href="https://oresk.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Dec 2022 21:53:35 +0100</lastBuildDate><atom:link href="https://oresk.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Homelab Setup</title>
+      <link>https://oresk.github.io/blog/posts/my-homelab-setup/</link>
+      <pubDate>Sun, 25 Dec 2022 21:53:35 +0100</pubDate>
+      
+      <guid>https://oresk.github.io/blog/posts/my-homelab-setup/</guid>
+      <description>A couple of years ago I bought a pretty sweet computer from a friend of mine. It became my home server sitting below the TV in the living room. An i7-3770 with 16GB of RAM on a supermicro motherboard in a nice Zalman case. I threw a couple of HDDs I had laying around. Recently I&amp;rsquo;ve upped the RAM to 32GB. The configuration is now more or less maxed out. I could put a xeon processor and move to ECC ram but it would not bring me much.</description>
+    </item>
+    
     <item>
       <title>Just bought a PinePhone</title>
       <link>https://oresk.github.io/blog/posts/just-bought-a-pinephone/</link>
