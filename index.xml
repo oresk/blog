@@ -6,7 +6,16 @@
     <description>Recent content on The Lorentz Force</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Dec 2022 21:53:35 +0100</lastBuildDate><atom:link href="https://oresk.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 06 Aug 2023 18:46:57 +0200</lastBuildDate><atom:link href="https://oresk.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Starting out with home automation</title>
+      <link>https://oresk.github.io/blog/posts/starting_out_with_home_automation/</link>
+      <pubDate>Sun, 06 Aug 2023 18:46:57 +0200</pubDate>
+      
+      <guid>https://oresk.github.io/blog/posts/starting_out_with_home_automation/</guid>
+      <description>A friend of mine is in the middle of building his new apartment, and as he knows I have a bit of experience with home automation he asked me for some pointers. I started writing up some parts that I think he needs to address now while building it out to make his life easier. And then I thought if I do it in english, I can make a post out of it so here it goes.</description>
+    </item>
+    
     <item>
       <title>My Homelab Setup</title>
       <link>https://oresk.github.io/blog/posts/my-homelab-setup/</link>
