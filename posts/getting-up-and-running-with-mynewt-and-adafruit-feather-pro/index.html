@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Getting up and running with MyNewt and Adafruit Feather nRF52 Pro &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://localhost:1313/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Getting up and running with MyNewt and Adafruit Feather nRF52 Pro</h1>
+  <time datetime=2018-03-23T16:29:57Z class="post-date">Fri, Mar 23, 2018</time>
+  <p>So I&rsquo;ve been out of directly designing hardware for the last year and also the projects I&rsquo;ve done took a lot of time so the project mynewt ( <a href="https://mynewt.apache.org/">https://mynewt.apache.org/</a> )took me for a bit of a suprisse. First time I&rsquo;ve read up on it, it seemed really great. At first it seems it is just a new RTOS, but it is much more than that. It is a whole ecosystem of tools allowing for easily adding features to your projects, porting them to new hardware, new boards and new microcontrollers too. It has tools for getting information from a running system (task cpu and memory usage etc) and it has a great flexible bootloader. And the tools do not force you to use a specific programmer, debugger, compiler etc. Another great thing is that the documentation is preety vast and easy to understand, but also it is kept in sync with the progress of the project.<br>
+Also I think a great decision that was made on the start of the project is them doing a whole system which included ble support. In that way from the start it had a complete usecase but to me it seems it is much more than just an IoT platform it&rsquo;s an enviroment.
+So when I saw it I got a LadyAda Feather PRO board ( <a href="https://www.adafruit.com/product/3574">https://www.adafruit.com/product/3574</a> ) with a MyNewt bootloader. It took me some time to figure out that the bootloder is probably too old to be able to communicate with newer versions of newtmgr tool. I am saying probably because I was able to update the image with Adafruit MyNewt tool but not through newtmgr tool, after I compiled the bootloder from the newest code and flashed it I was able to communicate with the board.</p>
+<p>Let&rsquo;s see what my first steps were.</p>
+<p>So first I needed to install the tools which was pretty easy. I am running Debian Testing and newt is in the repositories so I just installed &rsquo;newt&rsquo; and &rsquo;newtmgr&rsquo; packages. I also neede the arm cortex compiler, that consisted of adding a new repository ( ppa:team-gcc-arm-embedded/ppa ) and installing the &lsquo;gcc-arm-embedded&rsquo; package.
+An in depth explanation of steps needed to do this are in these three documentation pages ( <a href="https://mynewt.apache.org/latest/newt/install/newt_linux/">https://mynewt.apache.org/latest/newt/install/newt_linux/</a> <a href="https://mynewt.apache.org/latest/os/get_started/native_tools/">https://mynewt.apache.org/latest/os/get_started/native_tools/</a> <a href="https://mynewt.apache.org/latest/os/get_started/cross_tools/">https://mynewt.apache.org/latest/os/get_started/cross_tools/</a> )</p>
+<p>Ok all of the tools are here, starting a new project with Newt is pretty simple. Just run &rsquo;newt new first&rsquo; and when the command finishes we will have a folder named first with the project sceleton inside. The project is linked to the main MyNewt repository so now when we run &rsquo;newt install&rsquo; it will download all of the code from the repo. You can use the -v flag to get a verbose output and see what the tool is doing. For example for the &rsquo;newt install&rsquo; command there is no output while it is downloading so it can seem that the program is hanging.
+This will get us a blinky project that can be simulated localy.
+Running &rsquo;newt build my_blinky_sim&rsquo; will compile the sim project which we can start with &lsquo;./bin/targets/my_blinky_sim/app/apps/blinky/blinky.elf&rsquo;. You will see the output toggling.</p>
+<p>Ok, but I want to run it on the board I bought!</p>
+<p>The first thing we need to do is to add two more &ldquo;targets&rdquo;. MyNewt</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

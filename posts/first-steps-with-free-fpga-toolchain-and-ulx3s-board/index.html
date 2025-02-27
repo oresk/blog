@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>First steps with free FPGA toolchain and ULX3S board &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://localhost:1313/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>First steps with free FPGA toolchain and ULX3S board</h1>
+  <time datetime=2019-01-21T11:09:31Z class="post-date">Mon, Jan 21, 2019</time>
+  <p>So, this blog post first needs a bit of a background before jumping intro the technical parts (actually I am also writing before I&rsquo;ve done anything with the ULX3S board). I have some experience with FPGAs, even my XXXZavrsni rad was an arbitrary function generator made in a xilinx spartan fpga with a microblaze soft core and a serial peripheral, decomposition of functions was done in a Matlab program.</p>
+<p>But the thing is that was a really long time ago, about 6-7 years ago. And not to sound like an old fart, but it was a really different game back than. There was no way of running the tools in Linux. Tools were around ~20gb at least, which is a lot even today but then it was really a lot. The simulator that came with the tools was poor so you needed to use ModelSim tools for simulations. Installing the tools needed a few magic incantations so it was a pain just to get to writing VHDL.</p>
+<p>A couple if years ago I saw a cool <a href="https://media.ccc.de/v/32c3-7139-a_free_and_open_source_verilog-to-bitstream_flow_for_ice40_fpgas">presentation</a> about a FOSS toolchain for ice40 FPGAs. I haven&rsquo;t even tried it then, I did not have a ice40 board, did not know verilog and too be honest I thought that writing a FOSS toolchain for FPGAs, especially with the amount of info that was not available from the manufacturers. But I kept following what is happening.</p>
+<p>What I got from the presentations XXXX linkovi XXXX from this year&rsquo;s CCC I thing they have proved me wrong. There are multiple routers, multiple supported FPGAs from different manufacturers and has been used now for pretty big projects.</p>
+<p>I&rsquo;ve managed to get a ULX3S board to test how the whole thing is actually working.</p>
+<p>I am going to try to document as much as I can, the technical part and my thoughts during the whole exploration.</p>
+<p>So, the first thing I did was to checkout the links inside RadionaOrg <a href="https://github.com/RadionaOrg/ulx3s-links">repo</a>. I&rsquo;ve found a blinky there so I started from there.</p>
+<p>Considering the environment I did two things. First thing is I started doing everything not on my laptop but on the computer beneath my TV that is more beefy. The second thing is I</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Lily58 &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://localhost:1313/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Lily58</h1>
+  <time datetime=2020-09-13T05:43:48Z class="post-date">Sun, Sep 13, 2020</time>
+  <p>Soooo, mechanical keyboards.</p>
+<p>A lot of people are crazy about them. I bought one while they were still cheap. Bought a new Coolermaster TKL with red cherry switches for about 80usd almost 10 years ago. Changed up some keycaps, but did not really do any modifications to it. About ~2 years ago, I ran into <a href="http://bathroomepiphanies.com">Bathroom Epiphanies</a>, a guy from Stockholm making programmable replacement controllers for popular keyboards. Bought one for the coolermaster and made a programmable keyboard out of it. But in general did not bother my self a lot with it, and typed away happily on it.</p>
+<p>After some time I needed to setup another office setup. So I bought another used Coolermaster, but the girl that was selling it was also selling a <a href="https://kinesis-ergo.com/shop/freestyle2-for-pc-us/">Kinesis Freestyle</a>, the first version, white, mac layout, with all the tenting addons for about 50usd. I&rsquo;ve hacked a bit on it as the layout is located on an EEPROM, so I could change the layout by writing to it.</p>
+<p>For a long time I played around with the idea of making a split keyboard. Actually I had some let&rsquo;s split pcbs half soldered and waiting for a pretty long time, but I&rsquo;ve never finished that project.</p>
+<p>Was talking keyboards with a <a href="https://nikola.plejic.com/">friend</a> of mine, and to make a long story short we bought two kits for the Lily58 keyboard.</p>
+<p>There are different ways to buy all the parts for a diy keyboard. I think a big problem is that even the shops that have all the parts, you have to buy each part seperatly, so you it is not really beginner friendly because you need to know what fits together and how many of a certain part you need to buy. <a href="https://boardsource.xyz/store/5ec9df84c6b834480de6c3d0">Boardsource</a> has a nice way of doing it, as they have a configurator on one page where you select all the options you want for the kit, but you are sure that all the needed parts will be there.</p>
+<p>We have ordered from <a href="https://keycapsss.com/">keycapsss</a> as they are in the EU so we did not need to worry about customs taxes, etc. And I think we got lucky and some of the parts that we bought were the last ones.</p>
+<p>One mistake that we made was beeing cheap and buying one elitec and one arduino micro for the controllers. The logic was that we will be connecting only to one side so there was no need to spend another 10eur on the side that wont be connected to nothing. What we ended up with was needing to use two different cables and two different bootloader configurations to update the firmware on both sides. Well what can you do, you live and you learn. My plan currently is to at least change the bootloader on the micro pro so that I have the same bootloaders on both sides.</p>
+<p>The general build process was pretty straight forward, but because we bought all the leds that can be soldered to the board, the underglow and per key leds, there was a lot of additional soldering to put it together.</p>
+<p>After some debugging of a few keys everything was working great.</p>
+<p>Now there is a lot of slow changes to the layout in front of us to make it ours.</p>
+<p>A couple of weeks ago I made a tracpoint module that is connected instead of a oled screen on the right side. But that is material for another blogpost. But with that addon I can use the keyboard on the road with the laptop and not need aditional mouse.</p>
+<p>review</p>
+<p>All of this has also prompted me to move the firmware I am running on the frosty controller on the coolermaster to qmk.</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
