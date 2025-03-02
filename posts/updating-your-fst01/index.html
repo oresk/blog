@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Building GNUK and updating your FST-01 fw &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Building GNUK and updating your FST-01 fw</h1>
+  <time datetime=2018-04-18T10:46:53Z class="post-date">Wed, Apr 18, 2018</time>
+  <p>As <a href="http://www.fsij.org/doc-gnuk/intro.html#what-s-gnuk">GNUK documentation</a> says &ldquo;<a href="http://www.fsij.org/category/gnuk.html">Gnuk</a> is an implementation of USB cryptographic token for GNU Privacy Guard&rdquo;. It allows you not to have your private key available on the system, but allow you to use it.
+There are two ways to update your firmware, to use the script in the repo to do it, if your gnuk is functional or use the programmer to flash the binary.</p>
+<h1 id="building-the-firmware">Building the firmware</h1>
+<p>To build the firmware we need to clone the repository and because a part of it is a submodule we also need to fetch that.</p>
+<pre><code>git clone https://salsa.debian.org/gnuk-team/gnuk/gnuk.git
+cd gnuk/
+git submodule update --init
+</code></pre>
+<p>Now we have the whole code in the folder we can build it.
+First make sure that you have the following packages installed:</p>
+<pre><code>binutils-arm-none-eabi	
+gcc-arm-none-eabi 
+gdb-arm-none-eabi 		
+libnewlib-arm-none-eabi
+</code></pre>
+<p>We need to configure the build. Go to the /src folder and run the configure command.</p>
+<pre><code>./configure --vidpid=234b:0000 --target=FST_01
+</code></pre>
+<p>This sets the USB vendor and product ID and sets the pcb we are using. If you run ./configure you can see other options available.</p>
+<p>After running</p>
+<pre><code>make
+</code></pre>
+<p>in the /src folder we have a gnuk.bin file. And the reason why I am writing this blog post is the next command. From version 1.2.8 the binary generated still does not have the vid and pid included in the binary. I don&rsquo;t really understand the reasons fully, but it has something to do with the way the USB licence or the rules of giving out vid and pid.
+Anyway we need to run</p>
+<pre><code>make build/gnuk-vidpid.elf
+</code></pre>
+<p>which will get us the final binary which is located at</p>
+<p>src/build/gnuk-vidpid.bin</p>
+<h1 id="flashing-fst-01">Flashing FST-01</h1>
+<p>I used the STlinkV2 clone to flash the firmware. First thing we need to do is to connect the board to the programmer. There are four connections ground ( brown wire in the picture ), power 3.3v ( red wire ), SWDIO ( orange wire ) and SWCLK ( short yellow wire).</p>
+<p><img src="https://oresk.github.io/blog/content/images/2018/04/IMG_20180418_141955.jpg" alt="IMG_20180418_141955"></p>
+<p>Just make sure that the pinout of the programmer is the same as mine if you are copying it directly. I have a couple of programmers and not all have the same pinout.</p>
+<p>First we need to unlock the flash rom (which will also erase the rom)</p>
+<pre><code>sudo python2 ./tool/stlinkv2.py -u
+</code></pre>
+<p>will do it and before programming the microcontroller you need to power cycle the board.</p>
+<p>I had some problems with this step. I was getting the error <code>ValueError('Status of core is not halt.', 128)</code>, which means that the programming script can not halt the processor in a propper mode to continue the unlocking.</p>
+<p>I managed to get out of that problem by running</p>
+<pre><code>sudo openocd -f /usr/local/share/openocd/scripts/interface/stlink-v2.cfg  -f /usr/local/share/openocd/scripts/target/stm32f1x.cfg -c &quot;init; reset halt; shutdown&quot;
+</code></pre>
+<p>while holding the reset active and letting go in the middle of the process (that is the reason I have the other yellow wire ).</p>
+<p>Ok and after that finaly we can run</p>
+<pre><code>sudo ./tool/stlinkv2.py /src/build/gnuk-vidpid.bin
+</code></pre>
+<p>After a power cycle you should have a functioning gnuk running on a FST01!</p>
+<p>You can check if it is working by running</p>
+<pre><code>lsusb
+</code></pre>
+<p>And you should see vid and pid listed.</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>

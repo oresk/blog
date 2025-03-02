@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>JTAG debugging ESP32 - huzzah32 &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>JTAG debugging ESP32 - huzzah32</h1>
+  <time datetime=2019-08-05T15:07:53Z class="post-date">Mon, Aug 5, 2019</time>
+  <p>I am currently working on a project using an <a href="http://esp32.net/">ESP32</a>. I really the way Espressif has set up the development tools, I&rsquo;ll probably do a post about my thoughts about it.</p>
+<p>The serial port and logging is setup out of the box, so I&rsquo;ve been using printfs to debug the code. There are a couple of problems with this approach, but one big advantage, it is easy and just works. The downsides are that for every time you want to look at a variable, you add a printf, you build the program and need to upload it to the board, and as it is uploaded through the bootloader operating at 115200baud it takes some time.</p>
+<p>While I was programming it always seemed better to focus on the code and not to spend time on setting up the debugging. Now I have some code typed up, it would be a great time to setup JTAG debugging.</p>
+<p>When you have JTAG debugging setup you have a lot more than using printfs. You can watch local variables while single stepping through lines of code, you can stop the execution when a variable or a memory location equals some value. It is a very powerful thing. So how do we do it and what are the pitfalls?</p>
+<p>The hardware I am using to do this is:</p>
+<ul>
+<li><a href="https://www.adafruit.com/product/3405">Adafruit HUZZAH32 – ESP32 Feather Board</a></li>
+<li><a href="http://dangerousprototypes.com/docs/FT2232_breakout_board">Dangerous proto - PT2232H Breakout Board</a></li>
+<li>All cables needed to connect everything: Dupont header cables, usb cables etc.</li>
+</ul>
+<p>Here you can find the schematic for the <a href="https://cdn-learn.adafruit.com/assets/assets/000/041/630/original/feather_schem.png?1494449413">feather esp32</a> board and for the <a href="http://dangerousprototypes.com/docs/images/a/ac/Ft2232-bo-sch.png">ftdi breakout</a> board.</p>
+<h2 id="connecting-everything-up">Connecting everything up</h2>
+<p>You need to connect these pins</p>
+<p>ESP32   /    FT2232</p>
+<ol>
+<li>MTDI - GPIO12   / ADBUS1 - TDI</li>
+<li>MTCK - GPIO13  / ADBUS0 - TCK</li>
+<li>MTMS - GPIO14 / ADBUS3 - TMS</li>
+<li>MTDO - GPIO15 / ADBUS2 - TDO</li>
+<li>GND                     / GND</li>
+</ol>
+<figure><img src="https://oresk.github.io/blog/images/2019/08/IMG_20190805_123200.jpg">
+</figure>
+
+<p>Let me get one thing out of the way before I start talking about setting up the software. LadyAda feather board has two leds. The orange one is connected to the charging status pin of the charger. The other one, the red one is connected to the esp32 pin 13. So if you were using the led as a heartbeat signal, or for debugging, or whatever, do not do it any more, because that pin is needed for the jtag connection. This spent about an hour of my time :-)</p>
+<h2 id="setting-up-the-software">Setting up the software</h2>
+<p>First of all I will presume that you have esp-idf setup, and that you have basic <a href="https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html">experience</a> of using it, and that this is not your first time setting up a jtag gdb debugging ie. I will not explain the basic things</p>
+<p>It seems that the espressif guys modified a bit the ocd/gdb protocol and it is still not upstreamed to the openocd project, so we will need to use espressifs <a href="https://github.com/espressif/openocd-esp32">repo</a>. You can get compiled releases <a href="https://github.com/espressif/openocd-esp32/releases">here</a>. Just download the latest version that is appropriate for the development machine that you are using and extract it somewhere.</p>
+<p>I did a lot of modifications to the scripts used to connect to board with different configurations trying to figure out what is the correct configuration. As I said before in the end I figured out that the problem was that my program running on the esp was using one of the jtag pins. So in the end there are no modifications that need to be done.</p>
+<h2 id="running-openocd">Running openocd</h2>
+<p>If everything is connected correctly we should be able to run openocd like this from the bin folder:</p>
+<p><code>./openocd -f ../share/openocd/scripts/interface/ftdi/esp32_devkitj_v1.cfg -f ../share/openocd/scripts/board/esp-wroom-32.cfg</code></p>
+<p>You should see an output similar to this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Open On-Chip Debugger  v0.10.0-esp32-20190708 <span style="color:#f92672">(</span>2019-07-08-11:03<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Licensed under GNU GPL v2
+</span></span><span style="display:flex;"><span>For bug reports, read
+</span></span><span style="display:flex;"><span>	http://openocd.org/doc/doxygen/bugs.html
+</span></span><span style="display:flex;"><span>none separate
+</span></span><span style="display:flex;"><span>adapter speed: <span style="color:#ae81ff">1000</span> kHz
+</span></span><span style="display:flex;"><span>Info : Configured <span style="color:#ae81ff">2</span> cores
+</span></span><span style="display:flex;"><span>esp32 interrupt mask on
+</span></span><span style="display:flex;"><span>Info : Listening on port <span style="color:#ae81ff">6666</span> <span style="color:#66d9ef">for</span> tcl connections
+</span></span><span style="display:flex;"><span>Info : Listening on port <span style="color:#ae81ff">4444</span> <span style="color:#66d9ef">for</span> telnet connections
+</span></span><span style="display:flex;"><span>Info : clock speed <span style="color:#ae81ff">1000</span> kHz
+</span></span><span style="display:flex;"><span>Info : JTAG tap: esp32.cpu0 tap/device found: 0x120034e5 <span style="color:#f92672">(</span>mfg: 0x272 <span style="color:#f92672">(</span>Tensilica<span style="color:#f92672">)</span>, part: 0x2003, ver: 0x1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Info : JTAG tap: esp32.cpu1 tap/device found: 0x120034e5 <span style="color:#f92672">(</span>mfg: 0x272 <span style="color:#f92672">(</span>Tensilica<span style="color:#f92672">)</span>, part: 0x2003, ver: 0x1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x40007BED <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x00000000 
+</span></span><span style="display:flex;"><span>Info : Listening on port <span style="color:#ae81ff">3333</span> <span style="color:#66d9ef">for</span> gdb connections
+</span></span><span style="display:flex;"><span>Info : esp32: Debug controller <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : esp32: Core <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : esp32: Debug controller <span style="color:#ae81ff">1</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : esp32: Core <span style="color:#ae81ff">1</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : Detected debug stubs @ 3ffb37c4 on core0 of target <span style="color:#e6db74">&#39;esp32&#39;</span>
+</span></span><span style="display:flex;"><span>Info : accepting <span style="color:#e6db74">&#39;gdb&#39;</span> connection on tcp/3333
+</span></span><span style="display:flex;"><span>Error: No symbols <span style="color:#66d9ef">for</span> FreeRTOS
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x400916EE <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span>Info : Flash mapping 0: 0x10020 -&gt; 0x3f400020, <span style="color:#ae81ff">106</span> KB
+</span></span><span style="display:flex;"><span>Info : Flash mapping 1: 0x30018 -&gt; 0x400d0018, <span style="color:#ae81ff">581</span> KB
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x400916EE <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span>Info : Auto-detected flash size <span style="color:#ae81ff">4096</span> KB
+</span></span><span style="display:flex;"><span>Info : Using flash size <span style="color:#ae81ff">4096</span> KB
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x400916EE <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span>Info : Flash mapping 0: 0x10020 -&gt; 0x3f400020, <span style="color:#ae81ff">106</span> KB
+</span></span><span style="display:flex;"><span>Info : Flash mapping 1: 0x30018 -&gt; 0x400d0018, <span style="color:#ae81ff">581</span> KB
+</span></span><span style="display:flex;"><span>Info : Using flash size <span style="color:#ae81ff">584</span> KB
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x400916EE <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span>Info : Flash mapping 0: 0x10020 -&gt; 0x3f400020, <span style="color:#ae81ff">106</span> KB
+</span></span><span style="display:flex;"><span>Info : Flash mapping 1: 0x30018 -&gt; 0x400d0018, <span style="color:#ae81ff">581</span> KB
+</span></span><span style="display:flex;"><span>Info : Using flash size <span style="color:#ae81ff">108</span> KB
+</span></span><span style="display:flex;"><span>Warn : negative reply, retrying
+</span></span><span style="display:flex;"><span>Info : JTAG tap: esp32.cpu0 tap/device found: 0x120034e5 <span style="color:#f92672">(</span>mfg: 0x272 <span style="color:#f92672">(</span>Tensilica<span style="color:#f92672">)</span>, part: 0x2003, ver: 0x1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Info : JTAG tap: esp32.cpu1 tap/device found: 0x120034e5 <span style="color:#f92672">(</span>mfg: 0x272 <span style="color:#f92672">(</span>Tensilica<span style="color:#f92672">)</span>, part: 0x2003, ver: 0x1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Info : esp32: Debug controller <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : esp32: Core <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : esp32: Debug controller <span style="color:#ae81ff">1</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x5F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : esp32: Core <span style="color:#ae81ff">1</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x5F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x5000004B <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x00000000 
+</span></span><span style="display:flex;"><span>Info : esp32: Core <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x1F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x40000400 <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x40000400 
+</span></span><span style="display:flex;"><span>Info : Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x400D621C <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span>Info : Detected debug stubs @ 3ffb37c4 on core0 of target <span style="color:#e6db74">&#39;esp32&#39;</span>
+</span></span></code></pre></div><p>In the <code>scripts/board/esp-wroom-32.cfg</code> there is a line starting with <code>adapter_khz</code> which sets the JTAG speed. It is, a bit optimistically, set to 20MHz, so if this is not really working that great, try lowering the speed, especially if you are connecting the boards with longer wires.</p>
+<h2 id="running-xtensa-esp32-elf-gdb">Running xtensa-esp32-elf-gdb</h2>
+<p>In the executable files that come in the esp-idf there is xtensa-esp32-elf-gdb that we will use to connect to the openocd.</p>
+<p>There is a new file, lets call it gdbinit, that you need to make with the lines below. We will use that file when starting gdb.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>target remote :3333 
+</span></span><span style="display:flex;"><span>set remote hardware-watchpoint-limit <span style="color:#ae81ff">2</span> 
+</span></span><span style="display:flex;"><span>mon reset halt 
+</span></span><span style="display:flex;"><span>flushregs 
+</span></span><span style="display:flex;"><span>thb app_main 
+</span></span><span style="display:flex;"><span>c
+</span></span></code></pre></div><p>After we have made the file, and started the openocd, we will start the gdb and connect to the openocd.</p>
+<p><code>xtensa-esp32-elf-gdb -x gdbinit ~/path/to/elf/file.elf</code></p>
+<p>If everything is running ok, the output should look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>GNU gdb <span style="color:#f92672">(</span>crosstool-NG esp32-2019r1<span style="color:#f92672">)</span> 8.1.0.20180627-git
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2018</span> Free Software Foundation, Inc.
+</span></span><span style="display:flex;"><span>License GPLv3+: GNU GPL version <span style="color:#ae81ff">3</span> or later &lt;http://gnu.org/licenses/gpl.html&gt;
+</span></span><span style="display:flex;"><span>This is free software: you are free to change and redistribute it.
+</span></span><span style="display:flex;"><span>There is NO WARRANTY, to the extent permitted by law.  Type <span style="color:#e6db74">&#34;show copying&#34;</span>
+</span></span><span style="display:flex;"><span>and <span style="color:#e6db74">&#34;show warranty&#34;</span> <span style="color:#66d9ef">for</span> details.
+</span></span><span style="display:flex;"><span>This GDB was configured as <span style="color:#e6db74">&#34;--host=x86_64-build_pc-linux-gnu --target=xtensa-esp32-elf&#34;</span>.
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#34;show configuration&#34;</span> <span style="color:#66d9ef">for</span> configuration details.
+</span></span><span style="display:flex;"><span>For bug reporting instructions, please see:
+</span></span><span style="display:flex;"><span>&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+</span></span><span style="display:flex;"><span>Find the GDB manual and other documentation resources online at:
+</span></span><span style="display:flex;"><span>&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+</span></span><span style="display:flex;"><span>For help, type <span style="color:#e6db74">&#34;help&#34;</span>.
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#34;apropos word&#34;</span> to search <span style="color:#66d9ef">for</span> commands related to <span style="color:#e6db74">&#34;word&#34;</span>...
+</span></span><span style="display:flex;"><span>Reading symbols from /home/lovro/code/cunjovatikljunas-esp32/ckfw/build/ckfw.elf...done.
+</span></span><span style="display:flex;"><span>0x4015fe96 in esp_pm_impl_waiti <span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    at /home/lovro/code/cunjovatikljunas-esp32/esp-idf/components/esp32/pm_esp32.c:493
+</span></span><span style="display:flex;"><span>493	    asm<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;waiti 0&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>JTAG tap: esp32.cpu0 tap/device found: 0x120034e5 <span style="color:#f92672">(</span>mfg: 0x272 <span style="color:#f92672">(</span>Tensilica<span style="color:#f92672">)</span>, part: 0x2003, ver: 0x1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>JTAG tap: esp32.cpu1 tap/device found: 0x120034e5 <span style="color:#f92672">(</span>mfg: 0x272 <span style="color:#f92672">(</span>Tensilica<span style="color:#f92672">)</span>, part: 0x2003, ver: 0x1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>esp32: Debug controller <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>esp32: Core <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>esp32: Debug controller <span style="color:#ae81ff">1</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x5F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>esp32: Core <span style="color:#ae81ff">1</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x5F, after clear 0x5F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x5000004B <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x00000000 
+</span></span><span style="display:flex;"><span>esp32: Core <span style="color:#ae81ff">0</span> was reset <span style="color:#f92672">(</span>pwrstat<span style="color:#f92672">=</span>0x1F, after clear 0x0F<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x40000400 <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x40000400 
+</span></span><span style="display:flex;"><span>Hardware assisted breakpoint <span style="color:#ae81ff">1</span> at 0x400d621c: file ../main/ckfw_main.c, line 173.
+</span></span><span style="display:flex;"><span>Target halted. PRO_CPU: PC<span style="color:#f92672">=</span>0x400D621C <span style="color:#f92672">(</span>active<span style="color:#f92672">)</span>    APP_CPU: PC<span style="color:#f92672">=</span>0x4015FE96 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073462640<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073460740<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073465296<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073453032<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073412864<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073413736<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>New Thread 1073454164<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Switching to Thread 1073458708<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Thread <span style="color:#ae81ff">1</span> hit Temporary breakpoint 1, app_main <span style="color:#f92672">()</span> at ../main/ckfw_main.c:173
+</span></span></code></pre></div><p>You can now use gdb!</p>
+<h2 id="integrating-debugging-into-vscode">Integrating debugging into VScode</h2>
+<p>Using gdb by hand is all good, and doing some more complicated things is easier to do by hand directly in gdb. But the usual stuff you will do is nicer and quicker to do visually in the gui.</p>
+<p>TBD!!!</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>

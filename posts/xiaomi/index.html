@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Xiaomi Desk LED Lamp with a FOSS firmware &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Xiaomi Desk LED Lamp with a FOSS firmware</h1>
+  <time datetime=2019-07-28T09:03:53Z class="post-date">Sun, Jul 28, 2019</time>
+  <p>I needed a lamp on my table. I needed some backlight when I am working on my computer, and I needed a strong worklight when I am soldering and working on electronics. I found <a href="https://www.mi.com/global/smartlamp/">Xiaomi LED wifi lamp</a> in my home town, of all the places. And, actually, that was the cheapest place I was able to find it anywhere, including the Internet.</p>
+<p>I brought it home, and it was great. It looked great, it lit up the workplace evenly, and it was easy to control. As it was supposed to be able to be controllable from the wifi I set out to try that.</p>
+<p>That was a pretty shitty experience. First I was not able to install the application from the app store and I had to side load it. Then the pairing did not work, than it started working but stopped again afterwards.</p>
+<p>The wifi controlability was not really needed so at first I just ignored it.</p>
+<p>After that I stumbled upon Torxgewinde&rsquo;s github <a href="https://github.com/Torxgewinde/Desk-Lamp-Alternative-Firmware">repo</a>. He has made a FOSS firmware that basically replicates the functionality of the original firmware, but with the wifi functionality being done through http get requests.</p>
+<p>So, after a couple of minutes of deliberating, the lamp was taken apart and I had wires soldered to the pcb. I was getting gibberish from the serial port, but that was ok. Default ESP8266 speed is something nonstandard.</p>
+<figure><img src="https://oresk.github.io/blog/images/2019/07/IMG_20190603_230312-1.jpg">
+</figure>
+
+<p>Torxgewinde used arduino to build the project so that was what I installed. There were a couple libraries that the project depended on so I installed that also. I&rsquo;ve built the project, uploaded the built code to the board (without backing up the original firmware), and nothing worked. Well I was getting something from the serial port, so something was alive, but that was it. Actually later I figured out the output I was getting was from the bootloader.</p>
+<p>This was the first time I was working with the ESP8266, and it took me about a half a day to figure out that I should be using a bit of an older toolchain, and everything started working.</p>
+<p>Afterwards I made some changes to the code. I&rsquo;ve upgraded the ArduinoJson library to the 6.11 version. That was a major version upgrade and there were some interface changes, so It also took some code upgrades. I&rsquo;ve upgraded the other libs, but it did not need any changes.</p>
+<p>After that I&rsquo;ve implemented some <a href="https://github.com/oresk/Desk-Lamp-Alternative-Firmware">upgrades</a>. I&rsquo;ve added different ways of setting the light color and intensity.</p>
+<p>And there was an interesting problem that was solved with input validation. You set the color hue and intensity by inputting the ratio of the warm and cold white, and the global intensity. There was a way to set the output of both channels (warm and cold leds) to be at full output, but when you did that, it pulled to much current from the power supply and it would reset the lamp.</p>
+<p>With this project, there was another first that I had. All of the changes I did, I made pull requests and they were applied to the original repo. It was a pretty good feeling!</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>

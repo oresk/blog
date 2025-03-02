@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Homelab Setup &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>My Homelab Setup</h1>
+  <time datetime=2022-12-25T21:53:35&#43;0100 class="post-date">Sun, Dec 25, 2022</time>
+  <p>A couple of years ago I bought a pretty sweet computer from a friend of mine. It became my home server sitting below the TV in the living room. An i7-3770 with 16GB of RAM on a supermicro motherboard in a nice Zalman case. I threw a couple of HDDs I had laying around. Recently I&rsquo;ve upped the RAM to 32GB. The configuration is now more or less maxed out. I could put a xeon processor and move to ECC ram but it would not bring me much. I am still running that computer as my server, but I made changes over time to the software setup I am running.</p>
+<p>My setup included things like Plex for media streaming, Transmission for torrenting, Flexget for automation, and Syncthing for file synchronization. These services were all running on a single machine running <a href="https://www.openmediavault.org/">Openmediavault</a>, which is a fantastic open-source NAS operating system. That was running well, the &ldquo;problems&rdquo; came in a couple of different ways. When OMV released a new major release, they removed most of the plugins and said to use docker to set up the same thing. Which is fine. But I did not feel like moving the whole setup, so I kind of stayed on that setup waiting for better times to go through the whole configuration to have the same functionality. Also as I had one computer that I was depending on for some services I was not really up for experimenting with my running system.</p>
+<p>So I was running like that for some time, not really having any motivation to change anything. In the meantime I moved apartments. Had all kinds of things happen like a global pandemic etc. That was until I figured out that <a href="https://www.proxmox.com/en/proxmox-ve">proxmox VE</a> is based on Debian and there are versions that are free to use. That was not obvious to me when I first ran into proxmox.</p>
+<p><img src="https://oresk.github.io/blog/content/images/2022/12/spajza.jpg" alt="spajza"></p>
+<p>I installed proxmox ( on new hard disks keeping the old one if something hits the fan :-) ). As this is a big thing, the computer got a new name in sync with the theme I had until now, heads of defunct intelligence agencies, <a href="https://en.wikipedia.org/wiki/Wolfgang_Schwanitz">Schwanitz</a>. Managed, in one session, to install the OS and install all services that have also been used by other people. After that I also managed to virtualize my two systems running on stand-alone rpi-s. <a href="https://www.home-assistant.io/">Homeassistant</a> and <a href="https://pi-hole.net/">PiHole</a>. That was great to reduce the power consumption of my home setup a bit. Also with homeassistant I was running into the edge of what rpi was able to do.</p>
+<p><img src="https://oresk.github.io/blog/content/images/2022/12/schwanitz.bmp" alt="Schwanitz"></p>
+<p>One of the main benefits of virtualizing my home services with Proxmox is that it has given me a lot more flexibility. I can now easily spin up new VMs for testing or experimentation, and I have the option to snapshot my VMs and roll back any changes that might break something. I also have the ability to move VMs between physical hosts if I need to, which is something that would be much more difficult to do with physical hardware.</p>
+<p>Overall, I&rsquo;m really happy with my decision to virtualize my home services with Proxmox. It&rsquo;s given me a lot more control and flexibility, and I&rsquo;m excited to see what other services I can add to my setup in the future. If you&rsquo;re considering virtualizing your home services, I highly recommend giving Proxmox a try.</p>
+<p>Next steps:</p>
+<p>Well other then upgrading the server, I think I am really close to a fully functional setup. I plan to replace the ISP router with a small computer running <a href="https://www.pfsense.org/">pfSense</a> or <a href="https://opnsense.org/">OPNsense</a>. I&rsquo;ll keep trying different services to self host!</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>

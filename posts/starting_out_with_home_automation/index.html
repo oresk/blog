@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Starting out with home automation &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Starting out with home automation</h1>
+  <time datetime=2023-08-06T18:46:57&#43;0200 class="post-date">Sun, Aug 6, 2023</time>
+  <p>A friend of mine is in the middle of building his new apartment, and as he knows I have a bit of experience with home automation he asked me for some pointers. I started writing up some parts that I think he needs to address now while building it out to make his life easier. And then I thought if I do it in english, I can make a post out of it so here it goes. We will see how much ends up being general and how much ends up being specific for his apartment.</p>
+<p>My first thoughts are that there are two things important here. One is to allow yourself to do the &ldquo;smartification&rdquo; of the apartment in phases and at no point to have a non functioning apartment.</p>
+<p>Ok, so here is goes, in no particular order:</p>
+<p>First tell your electrician to get neutral line into all the cubbies for the switches. This will allow to use a lot wider range of <a href="https://zigbee.blakadder.com/switches.html">relays</a>, <a href="https://zigbee.blakadder.com/dimmers.html">dimmers</a> etc. Also tell your electrician to use deeper cubbies to allow something like <a href="https://zigbee.blakadder.com/Gledopto_GL-SD-001.html">this</a> to fit behind the switches.</p>
+<p>A lot of these small relays and dimmers are to be controlled also by the switch in parallel to being controlled through the zigbee network. One thing to look out / or to choose it that some, especially the dimmers, expect a push button to be able to control the level of the light. Some are able to be configured to expect a switch. If there is a switch then you are not able to control the light level from the switch, but the UX for a random person entering the apartment is not different then a non-smartified house. One thing to look out for, if you decide to go with push buttons, until the controllers are installed, you would not be able to use the lights, or you would need to buy two sets of switches.</p>
+<p>A thing to buy right away and give to the electrician is a whole apartment <a href="https://www.shelly.com/en/products/shop/shelly-3-em-1">power usage meter</a>. This gets installed in the main electricity distribution box. The meter works on its own and can also be integrated into home assistant.</p>
+<p>All the covers, so the ones on the roof windows, and the blinds on the big windows can be automated with these <a href="https://zigbee.blakadder.com/covers.html">devices</a>. Similar to the dimmers, to some of these you can connect an external switch and be able to use standard push buttons to physically. If you want to have the buttons they should be wired standard, just have the power coming to the covers and then going to the buttons, and later on that fork/split the cover control device will be added.</p>
+<p>I believe that the best automation software to choose is <a href="https://www.home-assistant.io/">homeassistant</a>.
+Starting off, it is best to run it on a raspberry pi. There are images already prepared that run without any additional configuration to get it started. There are some downsides, but are not really important now. By the time there is a problem ( usually the sd card braking ), you will figure out how do you want to solve that, depending on if you want to additional space, power or something else from your system running home automation. Just make sure to make backups, but now that is pretty easy as you can link your home assistant with your google drive, so it will automatically save your backup in your google drive. Recovering your system from a backup is surprisingly easy.</p>
+<p>The main wireless network. There will always be multiple networks through which the devices that you have at home connect to your homeassistant instance. But it is good to select one that will be your primary. The available are wifi, zigbee, z-wave, rf. Out of these my first choice is zigbee. z-wave devices need to be certified to fully work with the network, that makes the device usually work better, but they are more expensive and hard to get than zigbee. Wifi devices usually use more power, so having them work as standalone sensor devices is not really conveniant. RF devices were used a long time ago, they are not really secure or ergonomic to use any more.
+To me, zigbee makes sense the most. It kinda removes most of your home automation devices from your IP network to a separated one. Zigbee makes a mesh network, so with enough devices, especially ones with continuous power (they usually act as a repeater / router in the mesh network), the newrok will cover your whole apartment without needing to do anything special for your wifi network.</p>
+<p>The company around the homeassistant project make their own usb zigbee adaper called <a href="https://www.home-assistant.io/skyconnect/">Skyconnect</a>, so I would use that to connect to the zigbee mesh. As it is sure to be supported as best as it can in homeassistant.</p>
+<p>Last tip, if you are buying a new thing for the apartment that you can see being integrated into the home automation, it is better to start by looking at the currently officially supported homeassistant <a href="https://www.home-assistant.io/integrations/">integrations</a> and the list of zigbee <a href="https://zigbee.blakadder.com/">devices</a> where you can see if there are some problems with a particular device or not. It is better to do that, then trying to integrate something in a very complicated way (jailbraking, reverse engineering, writing specific automations just to calculate an internal value etc).</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>

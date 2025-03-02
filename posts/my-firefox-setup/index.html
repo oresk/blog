@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Firefox setup &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>My Firefox setup</h1>
+  <time datetime=2019-11-03T18:57:28Z class="post-date">Sun, Nov 3, 2019</time>
+  <p>I had a problem with my firefox and I had to restart my firefox profile to be able to start it. Mleh, shit like this sometimes happens. Anyway, I used a generic chromium with just a uBlock origin plugin while trying to debug what was happening, and it came to me how different my UX in Firefox is.</p>
+<figure><img src="https://oresk.github.io/blog/images/2019/10/2019-10-24-202419_1920x1080_scrot.png"
+    alt="Night look"><figcaption>
+      <p>Night look</p>
+    </figcaption>
+</figure>
+
+<p>I thought it would be interesting to do a writeup about which plugins I am using. With all of the changes I made, it makes a pretty different experience than the usual one.</p>
+<p>From the UX standpoint the two most important plugins are TreeStyleTab and Auto tab discard.</p>
+<h3 id="treestyle-tabhttpsaddonsmozillaorgen-usfirefoxaddontree-style-tab"><a href="https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/">TreeStyle tab</a></h3>
+<p>The tabs are on the side, vertically distributed. We are saving precious vertical pixels. So you can have a lot of tabs open and you can still see the subject in each tab. Also a great thing is that if you open a link with the middle button it opens under the current tab in a collapsible tree. Hence the name. For me this is great for research. I open a lot of tabs and if I will come to it later I leave it opened and just collapse the tree.</p>
+<p>When you install it and start using it you will probably get annoyed that you still have the tabs on the top of the window. There were some security changes and the addon can not move it by it self, so <a href="https://www.reddit.com/r/firefox/comments/736cji/how_to_hide_native_tabs_in_firefox_57_tree_style/">you</a> will need to, if it gets on your nerves.</p>
+<p>Great now we can open a lot of tabs, but that eats a lot of ram and cpu. this is where the next plugin comes in.</p>
+<h3 id="auto-tab-discardhttpsaddonsmozillaorgen-usfirefoxaddonauto-tab-discard"><a href="https://addons.mozilla.org/en-US/firefox/addon/auto-tab-discard/">Auto Tab discard</a></h3>
+<p>This plugin discards tabs. After some time it stops the execution and removes the webpage from the memory. Next time you click on it opens the page again. You can prevent it doing it on some pages.</p>
+<p>Now you can use this as a short term bookmarks. You remember bookmarks, the thing where you save the url and than never open it again.</p>
+<h3 id="tab-counter-plushttpsaddonsmozillaorgen-usfirefoxaddontab-counter-plussrcsearch"><a href="https://addons.mozilla.org/en-US/firefox/addon/tab-counter-plus/?src=search">Tab counter plus</a></h3>
+<p>I have milions of tabs open, so it is interesting to see how many tabs there are.</p>
+<h3 id="adblocking-and-security">Adblocking and security</h3>
+<p>For ad blocking I am using <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/?src=search">uBlock Origin</a> as should you. Most of other adblockers sell your data, whitelist a lot of ads etc. <a href="https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/">HTTPS everywhere</a> was of more use before, but I still have it installed. <a href="https://addons.mozilla.org/en-US/firefox/addon/decentraleyes/">Decentraleyes</a> stops you from being tracked through CDNs.</p>
+<h3 id="keepassxc-browserhttpsaddonsmozillaorgen-usfirefoxaddonkeepassxc-browsersrcsearch"><a href="https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/?src=search">KeePassXC-Browser</a></h3>
+<p>I keep my passwords inside Keepass, and this is an addon to automatically use the paswords inside the browser.</p>
+<h3 id="flagfoxhttpsaddonsmozillaorgen-usfirefoxaddonflagfoxsrcsearch"><a href="https://addons.mozilla.org/en-US/firefox/addon/flagfox/?src=search">Flagfox</a></h3>
+<p>This is a small extension that adds a flag icon to the URL bar. It tells you where the server on which the page is hosted on is located. It puts a weird context to my surfing of the internet, makes it more concrete and physical. The &ldquo;there is no cloud, just someone elses computer&rdquo; is always apparent.</p>
+<h3 id="reddit-enhancement-suitehttpsaddonsmozillaorgen-usfirefoxaddonreddit-enhancement-suite"><a href="https://addons.mozilla.org/en-US/firefox/addon/reddit-enhancement-suite/">Reddit Enhancement Suite</a></h3>
+<p>I use Reddit, probably spend too much time there. RES helps.</p>
+<h3 id="theming">Theming</h3>
+<h3 id="zenfoxhttpsaddonsmozillaorgen-usfirefoxaddonzen-fox"><a href="https://addons.mozilla.org/en-US/firefox/addon/zen-fox/">Zenfox</a></h3>
+<p>Zenfox is a addon that applies zenburn theme. I am using this instead of a regular theme because it allows you to set times at which it will change the theme between dark and light. You can do the same thing with the next addon:</p>
+<h3 id="dark-readerhttpsaddonsmozillaorgen-usfirefoxaddondarkreader"><a href="https://addons.mozilla.org/en-US/firefox/addon/darkreader/">Dark Reader</a></h3>
+<p>It changes the look of the pages dynamicaly. Visually it works fantastically, sometimes it can kind of bog down the CPU. So try it out see if it wors for you.</p>
+<p>And thats almost it. A couple of days ago I ran into this one</p>
+<h3 id="worldbrains-memexhttpsworldbrainio"><a href="https://worldbrain.io/">WorldBrain&rsquo;s Memex</a></h3>
+<p>It does full text search of your bookmarks, or all of the pages you visit. You can tag the pages and add notes. After that, you can search through all of it. They seem like nice and interesting people, the code to the whole addon is available on github. You can backup all the data, but by default all data is stored on your local computer. Another nice thing is that they are not taking any VC money.</p>
+<p>I&rsquo;ve just started using it, so I do not have much to comment but it really seems interesting. Nice touch is that the hostname of my computer, for a long time, is memex. In the nod to the same thing they are making.</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>

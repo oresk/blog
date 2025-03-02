@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.131.0">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CP2102 usb to serial outputing 4.5V &middot; The Lorentz Force</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+
+  
+  <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <p class="lead">
+       Random mussings 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>CP2102 usb to serial outputing 4.5V</h1>
+  <time datetime=2019-01-10T14:10:22Z class="post-date">Thu, Jan 10, 2019</time>
+  <p>So, I&rsquo;ve just had a new project programming a NRF52 and with almost all embedded projects it is great to have a way to easily debug some problems without setting up the whole debugging environment. Using the serial connection is usually how I do it, sometimes a LED is enough. Because of that I have a lot of USB to serial adapters. All of the ones I had had a USB A connector on it which made it hard to connect it to the development board, I had to have a extension cable or have the dongle hanging out directly on the laptop. Anyways it was a bit of a pain in the ass so I decided to buy a few adapters that had a micro USB connectors on the board so I could use the standard mobile phone cables. I decided to order CP2102 modules from ebay because they were really cheap (~1 - 2USD) and were not a FTDI part so I did not need to worry about FTDI bricking them with a driver update if someone deceived me and sold me fake functioning part.</p>
+<p><img src="https://oresk.github.io/blog/content/images/2019/01/s-l1600.jpg" alt="s-l1600"></p>
+<p>The adapters came without the headers soldered on, so I did, connected the adapter to the development board and went on my merry way. The things I printed with the microcontroller were displayed on my terminal. But as you might assume if the story ended here I would not be writing this blog post.</p>
+<p>A few days later I was checking something on the board with the multimeter and to my astonishment I saw that the USB to serial adapter had a 4.2V output. I disconnected the adapter really quickly from the development board :-). It was really weird, The output of the board was supposed to be 3.3V. Everything was functioning as expected because the NRF52 inputs had input protection that was doing its job, but really I was lucky that something did not burn up.</p>
+<p>So what is the problem? I found the <a href="http://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf">CP2102 datasheet</a> and figured out that there are a few possible ways of powering the chip ( with an internal regulator, outside regulated voltage etc). I thought there was the problem and I started looking at the pcb and tracing part of the schematic. But it seemed that everything was laid out ok. Back to the drawing board&hellip;</p>
+<p>So after some more time with a pen and paper and the board I saw another discrepancy. The reset pin was connected directly to the input VBUS (ie. USB 5V). It made sense that that could be the problem. If we have a voltage of 5V on the reset pin and that pin has input protection diodes to the internal VDD (which is supposed to be 3.3V ie. lower than the /RST pin voltage) current is going to flow from the /RST pin to to VDD through the protection diode which is now forward polarized. The voltage on the VDD is going to be the /RST pin voltage minus the diode forward voltage (~5V - ~.7V = ~4.2V).</p>
+<p><img src="https://oresk.github.io/blog/content/images/2019/01/DSC04850-1.JPG" alt="DSC04850-1"></p>
+<p>What to do next, how to fix the mistake. The datasheet calls for the /RST pin to be connect through a pullup resistor to VDD (3.3V). It is also specified that the /RST pin is a open drain (&ldquo;Device Reset. Open-drain output of internal POR or VDD monitor. An external source can initiate a system reset by driving this pin low for at least 15 μs&rdquo;), so I thought the POR circuit would not work if the pin was left floating. But later in the datasheet, in the typical connection diagram, the pullup is listed as a option that will increase noise immunity, but that seemed that is not really required. Maybe it had enough internal resistance to function, but there was only one way to find out. I&rsquo;ve cut the pcb trace connecting the /RST pin to the input capacitor. Connected the board to my laptop and measured the output voltage. BINGO! There was 3.3V on the pins. It seemed to fix things. I&rsquo;ve connected to the development board and communication was functioning. So it seems one cut is the only thing needed.</p>
+<p><img src="https://oresk.github.io/blog/content/images/2019/01/DSC04845.JPG" alt="DSC04845"></p>
+<p>What did I learn this situation. Don&rsquo;t expect anything from an ebay board and test everything! Actually I was really lucky that I did not burn up the NRF52 development board when I connected the faulty adapter. So beware of the CP2102 boards from ebay. It is really fascinating that they made so many of them and are selling them on ebay with this grave of a mistake.</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+  
+
+
+    
+  </body>
+</html>
