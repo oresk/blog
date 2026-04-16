@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.131.0">
+  <meta name="generator" content="Hugo 0.160.1">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +12,25 @@
   <meta name="description" content="" />
 
   
-  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://oresk.github.io/blog/css/hyde.css">
+  
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://oresk.github.io/blog/css/print.min.46d9bcbd80937d55db06b7034dfed7fc48b2bfb13e535dd9eac5581bfbaa8ddf.css"
+      media="print"
+      integrity="sha256-Rtm8vYCTfVXbBrcDTf7X/Eiyv7E&#43;U13Z6sVYG/uqjd8="
+      crossorigin="anonymous" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://oresk.github.io/blog/css/hyde-bundle.min.612b3c1e758019dac415036c9624d495454cd58eb620e5f2b32338993cb54952.css"
+      media="all"
+      integrity="sha256-YSs8HnWAGdrEFQNsliTUlUVM1Y62IOXysyM4mTy1SVI="
+      crossorigin="anonymous" />  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
 
   
   <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
-
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
@@ -48,7 +57,7 @@
       </ul>
     </nav>
 
-    <p>&copy; 2025. All rights reserved. </p>
+    <p>&copy; 2026. All rights reserved. </p>
   </div>
 </aside>
 
@@ -89,7 +98,7 @@
 <p>If everything is connected correctly we should be able to run openocd like this from the bin folder:</p>
 <p><code>./openocd -f ../share/openocd/scripts/interface/ftdi/esp32_devkitj_v1.cfg -f ../share/openocd/scripts/board/esp-wroom-32.cfg</code></p>
 <p>You should see an output similar to this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Open On-Chip Debugger  v0.10.0-esp32-20190708 <span style="color:#f92672">(</span>2019-07-08-11:03<span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Open On-Chip Debugger  v0.10.0-esp32-20190708 <span style="color:#f92672">(</span>2019-07-08-11:03<span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>Licensed under GNU GPL v2
 </span></span><span style="display:flex;"><span>For bug reports, read
 </span></span><span style="display:flex;"><span>	http://openocd.org/doc/doxygen/bugs.html
@@ -142,7 +151,7 @@
 <h2 id="running-xtensa-esp32-elf-gdb">Running xtensa-esp32-elf-gdb</h2>
 <p>In the executable files that come in the esp-idf there is xtensa-esp32-elf-gdb that we will use to connect to the openocd.</p>
 <p>There is a new file, lets call it gdbinit, that you need to make with the lines below. We will use that file when starting gdb.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>target remote :3333 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>target remote :3333 
 </span></span><span style="display:flex;"><span>set remote hardware-watchpoint-limit <span style="color:#ae81ff">2</span> 
 </span></span><span style="display:flex;"><span>mon reset halt 
 </span></span><span style="display:flex;"><span>flushregs 
@@ -151,7 +160,7 @@
 </span></span></code></pre></div><p>After we have made the file, and started the openocd, we will start the gdb and connect to the openocd.</p>
 <p><code>xtensa-esp32-elf-gdb -x gdbinit ~/path/to/elf/file.elf</code></p>
 <p>If everything is running ok, the output should look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>GNU gdb <span style="color:#f92672">(</span>crosstool-NG esp32-2019r1<span style="color:#f92672">)</span> 8.1.0.20180627-git
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>GNU gdb <span style="color:#f92672">(</span>crosstool-NG esp32-2019r1<span style="color:#f92672">)</span> 8.1.0.20180627-git
 </span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2018</span> Free Software Foundation, Inc.
 </span></span><span style="display:flex;"><span>License GPLv3+: GNU GPL version <span style="color:#ae81ff">3</span> or later &lt;http://gnu.org/licenses/gpl.html&gt;
 </span></span><span style="display:flex;"><span>This is free software: you are free to change and redistribute it.
@@ -202,9 +211,6 @@
 
     
       
-  
-
-
     
   </body>
 </html>
