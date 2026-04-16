@@ -16,14 +16,14 @@
     <link
       type="text/css"
       rel="stylesheet"
-      href="https://oresk.github.io/blog/css/print.min.46d9bcbd80937d55db06b7034dfed7fc48b2bfb13e535dd9eac5581bfbaa8ddf.css"
+      href="https://blog.oreskovic.me/css/print.min.46d9bcbd80937d55db06b7034dfed7fc48b2bfb13e535dd9eac5581bfbaa8ddf.css"
       media="print"
       integrity="sha256-Rtm8vYCTfVXbBrcDTf7X/Eiyv7E&#43;U13Z6sVYG/uqjd8="
       crossorigin="anonymous" />
     <link
       type="text/css"
       rel="stylesheet"
-      href="https://oresk.github.io/blog/css/hyde-bundle.min.612b3c1e758019dac415036c9624d495454cd58eb620e5f2b32338993cb54952.css"
+      href="https://blog.oreskovic.me/css/hyde-bundle.min.612b3c1e758019dac415036c9624d495454cd58eb620e5f2b32338993cb54952.css"
       media="all"
       integrity="sha256-YSs8HnWAGdrEFQNsliTUlUVM1Y62IOXysyM4mTy1SVI="
       crossorigin="anonymous" />  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
@@ -33,8 +33,8 @@
   <script async defer src="https://analytics.umami.is/script.js" data-website-id="f35a877a-b27f-4b04-88d7-1bdd3f041b35"></script>
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://oresk.github.io/blog/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="https://oresk.github.io/blog/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.oreskovic.me/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://blog.oreskovic.me/favicon.png">
 
   
   
@@ -44,7 +44,7 @@
   <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <a href="https://oresk.github.io/blog/"><h1>The Lorentz Force</h1></a>
+      <a href="https://blog.oreskovic.me/"><h1>The Lorentz Force</h1></a>
       <p class="lead">
        Random mussings 
       </p>
@@ -52,7 +52,7 @@
 
     <nav>
       <ul class="sidebar-nav">
-        <li><a href="https://oresk.github.io/blog/">Home</a> </li>
+        <li><a href="https://blog.oreskovic.me/">Home</a> </li>
         
       </ul>
     </nav>
@@ -68,9 +68,9 @@
   <p>A couple of years ago I bought a pretty sweet computer from a friend of mine. It became my home server sitting below the TV in the living room. An i7-3770 with 16GB of RAM on a supermicro motherboard in a nice Zalman case. I threw a couple of HDDs I had laying around. Recently I&rsquo;ve upped the RAM to 32GB. The configuration is now more or less maxed out. I could put a xeon processor and move to ECC ram but it would not bring me much. I am still running that computer as my server, but I made changes over time to the software setup I am running.</p>
 <p>My setup included things like Plex for media streaming, Transmission for torrenting, Flexget for automation, and Syncthing for file synchronization. These services were all running on a single machine running <a href="https://www.openmediavault.org/">Openmediavault</a>, which is a fantastic open-source NAS operating system. That was running well, the &ldquo;problems&rdquo; came in a couple of different ways. When OMV released a new major release, they removed most of the plugins and said to use docker to set up the same thing. Which is fine. But I did not feel like moving the whole setup, so I kind of stayed on that setup waiting for better times to go through the whole configuration to have the same functionality. Also as I had one computer that I was depending on for some services I was not really up for experimenting with my running system.</p>
 <p>So I was running like that for some time, not really having any motivation to change anything. In the meantime I moved apartments. Had all kinds of things happen like a global pandemic etc. That was until I figured out that <a href="https://www.proxmox.com/en/proxmox-ve">proxmox VE</a> is based on Debian and there are versions that are free to use. That was not obvious to me when I first ran into proxmox.</p>
-<p><img src="https://oresk.github.io/blog/content/images/2022/12/spajza.jpg" alt="spajza"></p>
+<p><img src="https://blog.oreskovic.me/content/images/2022/12/spajza.jpg" alt="spajza"></p>
 <p>I installed proxmox ( on new hard disks keeping the old one if something hits the fan :-) ). As this is a big thing, the computer got a new name in sync with the theme I had until now, heads of defunct intelligence agencies, <a href="https://en.wikipedia.org/wiki/Wolfgang_Schwanitz">Schwanitz</a>. Managed, in one session, to install the OS and install all services that have also been used by other people. After that I also managed to virtualize my two systems running on stand-alone rpi-s. <a href="https://www.home-assistant.io/">Homeassistant</a> and <a href="https://pi-hole.net/">PiHole</a>. That was great to reduce the power consumption of my home setup a bit. Also with homeassistant I was running into the edge of what rpi was able to do.</p>
-<p><img src="https://oresk.github.io/blog/content/images/2022/12/schwanitz.bmp" alt="Schwanitz"></p>
+<p><img src="https://blog.oreskovic.me/content/images/2022/12/schwanitz.bmp" alt="Schwanitz"></p>
 <p>One of the main benefits of virtualizing my home services with Proxmox is that it has given me a lot more flexibility. I can now easily spin up new VMs for testing or experimentation, and I have the option to snapshot my VMs and roll back any changes that might break something. I also have the ability to move VMs between physical hosts if I need to, which is something that would be much more difficult to do with physical hardware.</p>
 <p>Overall, I&rsquo;m really happy with my decision to virtualize my home services with Proxmox. It&rsquo;s given me a lot more control and flexibility, and I&rsquo;m excited to see what other services I can add to my setup in the future. If you&rsquo;re considering virtualizing your home services, I highly recommend giving Proxmox a try.</p>
 <p>Next steps:</p>
